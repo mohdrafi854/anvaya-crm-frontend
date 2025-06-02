@@ -1,0 +1,125 @@
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  background-color: #f8f7fa;
+}
+.App {
+  font-family: sans-serif;
+  text-align: left;
+}
+ul {
+  list-style: none;
+}
+aside {
+  position: fixed;
+  width: 100%;
+  max-width: 270px;
+  box-shadow: 0 0.125rem 0.5rem 0 rgba(47, 43, 61, 0.12);
+  padding: 30px;
+  background-color: #fff;
+  margin: 20px 0 0 0;
+  box-sizing: border-box;
+  border-radius: 0.375rem;
+}
+aside ul {
+  padding: 0;
+  margin: 0;
+}
+aside ul li a {
+  color: #444050;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  border-radius: 0.375rem;
+}
+aside ul li a.active {
+  background-color: rgba(47, 43, 61, 0.2);
+}
+aside ul li a:hover {
+  background-color: rgba(47, 43, 61, 0.2);
+}
+.right {
+  width: calc(75% - 25% - 65px);
+  padding: 0 0 0 25px;
+  margin-left: calc(270px + 0px);
+  margin-top: 20px;
+}
+ul li {
+  padding: 0;
+}
+.container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+.main-title {
+  background-color: #fff;
+  margin: 0;
+  padding: 20px;
+  font-size: 1.5rem;
+  box-shadow: 0 0.125rem 0.5rem 0 rgba(47, 43, 61, 0.12);
+  border-radius: 0.375rem;
+  color: #444050;
+}
+.leadName {
+  display: inline-block;
+  padding: 10px;
+}
+.btn {
+  display: inline-block;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  color: transparent;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: transparent;
+}
+.btn-custom {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+}
+.btn-custom:hover {
+  background-color: #0b5ed7;
+  border-color: #0b5ed7;
+}
+.leadNameLink {
+  text-decoration: none;
+  color: #444050;
+  font-weight: bold;
+}
+input,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-clip: padding-box;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  box-sizing: border-box;
+}
+.list-agent {
+  padding: 0;
+  font-size: 15px;
+}
+label {
+  display: block;
+  margin-bottom: 4px;
+}
