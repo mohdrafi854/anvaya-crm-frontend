@@ -5,7 +5,7 @@ The Anvaya CRM app will focus on lead management with defined steps for each lea
 
 ## Demo Link
 
-[Live Demo](https://internetshopping.vercel.app)
+[Live Demo](https://anvayafrontend.vercel.app)
 
 ---
 
@@ -20,6 +20,7 @@ npm run dev  # or `npm run start` / `yarn dev`
 ## Technologies
 - React JS
 - React Router
+- Redux
 - Node JS
 - Express JS
 - MongoDB
