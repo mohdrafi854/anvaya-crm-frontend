@@ -1,70 +1,148 @@
-# Getting Started with Create React App
+# Anvaya CRM App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Anvaya CRM app will focus on lead management with defined steps for each lead's lifecycle. We will assign sales agents to leads and allow users to add comments or updates to each lead.
+---
 
-## Available Scripts
+## Demo Link
 
-In the project directory, you can run:
+[Live Demo](https://internetshopping.vercel.app)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Quick Start
+```
+git clone https://github.com/mohdrafi854/Ecommerce-Frontend.git
+cd <your-repo>
+npm install
+npm run dev  # or `npm run start` / `yarn dev`
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies
+- React JS
+- React Router
+- Node JS
+- Express JS
+- MongoDB
+---
 
-### `npm test`
+## Demo Video
+Watch a walkthrough (5–7 minutes) of all major features of this app: [Loom Video Link]()
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
+**Home**
+- Display product categories
 
-### `npm run build`
+**Lisitng Page**
+- Display all the Products
+- Product search by name
+- Filter by categories
+- Filter product by rating
+- Sort product by price 
+- Click wishlist icon and add item
+- Click on Add to cart cart to add item
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Detail Page**
+- View full information
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Wishlist Page**
+- Show all wishlist items
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**AddToCart Page**
+- Show all add to cart items
 
-### `npm run eject`
+## API Refrence
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **GET /api/categories**<br>
+Display all categories<br>
+Sample Response:<br>
+```
+[{_id, name, imageUrl}, ....]
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **GET /api/products**<br>
+Display all List<br>
+Sample Response:<br>
+```
+[{_id, name, price, rating, size, imageUrl}, ....]
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **GET /api/products**<br>
+View full details<br>
+Sample Response:<br>
+```
+[{_id, name, price, rating, size, imageUrl}, ....]
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **GET /api/wishlist**<br>
+Display all wishlist items<br>
+Sample Response:<br>
+```
+[{_id, Category, imageUrl, name, price, rating, size}, ....]
+```
 
-## Learn More
+### **GET /api/cart**<br>
+Display all cart items<br>
+Sample Response:<br>
+```
+[{_id, items, totalPrice}, ....]
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **POST /api/products**<br>
+Create new item<br>
+Sample Response:<br>
+```
+[{_id, name, price, imageUrl, Category}, ....]
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **PATCH /api/products/:id**<br>
+Create new item<br>
+Sample Response:<br>
+```
+[{_id, name, price, imageUrl, Category}, ....]
+```
 
-### Code Splitting
+### **POST /api/categories**<br>
+Create new category<br>
+Sample Response:<br>
+```
+[{_id, name, imageUrl}, ....]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### **DELETE /api/categories/:id**<br>
+Delete item by id<br>
+Sample Response:<br>
+```
+[{_id}, ....]
+```
 
-### Analyzing the Bundle Size
+### **POST /api/cart**<br>
+Add to cart item<br>
+Sample Response:<br>
+```
+[{_id, quantity}, ....]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **DELETE /api/cart/item/:id**<br>
+Delete cart item<br>
+Sample Response:<br>
+```
+[{_id}, ....]
+```
 
-### Making a Progressive Web App
+### **POST /api/wishlist**<br>
+Add to wishlist item<br>
+Sample Response:<br>
+```
+[{_id}, ....]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### **DELETE /api/wishlist/:id**<br>
+Delete wishlist item<br>
+Sample Response:<br>
+```
+[{_id}, ....]
+```
+---
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+For bug or feature requests, please reach out to mohd.rafi854@gmail.com
