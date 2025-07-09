@@ -53,95 +53,67 @@ Watch a walkthrough (5–7 minutes) of all major features of this app: [Loom Vid
 
 ## API Refrence
 
-### **GET /api/categories**<br>
-Display all categories<br>
+### **GET /leads**<br>
+Display all leads<br>
 Sample Response:<br>
 ```
-[{_id, name, imageUrl}, ....]
+[{_id, name, source, salesAgent, status, tags, timeToClose, priority}, ....]
 ```
 
-### **GET /api/products**<br>
-Display all List<br>
+### **GET /agents**<br>
+Display all agentst<br>
 Sample Response:<br>
 ```
-[{_id, name, price, rating, size, imageUrl}, ....]
+[{_id, name, email}, ....]
 ```
 
-### **GET /api/products**<br>
-View full details<br>
+### **GET /leads/:id/comments**<br>
+View comment<br>
 Sample Response:<br>
 ```
-[{_id, name, price, rating, size, imageUrl}, ....]
+[{_id, lead, author, commentText}, ....]
 ```
 
-### **GET /api/wishlist**<br>
-Display all wishlist items<br>
+### **GET /report/last-week**<br>
+Display report last week<br>
 Sample Response:<br>
 ```
-[{_id, Category, imageUrl, name, price, rating, size}, ....]
+[{_id, status}, ....]
 ```
 
-### **GET /api/cart**<br>
-Display all cart items<br>
+### **GET /report/pipeline**<br>
+Display all leads which has status closed<br>
 Sample Response:<br>
 ```
-[{_id, items, totalPrice}, ....]
+[{_id, status}, ....]
 ```
 
-### **POST /api/products**<br>
-Create new item<br>
+### **POST /leads**<br>
+Create new lead<br>
 Sample Response:<br>
 ```
-[{_id, name, price, imageUrl, Category}, ....]
+[{_id, name, source, status, tags, timeToClose, priority}, ....]
 ```
 
-### **PATCH /api/products/:id**<br>
-Create new item<br>
+### **PATCH /leads/:id**<br>
+Update leads by lead id<br>
 Sample Response:<br>
 ```
-[{_id, name, price, imageUrl, Category}, ....]
+[{_id, name, source, status, tags, timeToClose, priority}, ....]
 ```
 
-### **POST /api/categories**<br>
-Create new category<br>
-Sample Response:<br>
-```
-[{_id, name, imageUrl}, ....]
-```
-
-### **DELETE /api/categories/:id**<br>
-Delete item by id<br>
+### **DELETE /leads/:id**<br>
+Delete leads by lead id<br>
 Sample Response:<br>
 ```
 [{_id}, ....]
 ```
 
-### **POST /api/cart**<br>
-Add to cart item<br>
+### **POST /agents**<br>
+Create new agent<br>
 Sample Response:<br>
 ```
-[{_id, quantity}, ....]
-```
-
-### **DELETE /api/cart/item/:id**<br>
-Delete cart item<br>
-Sample Response:<br>
-```
-[{_id}, ....]
-```
-
-### **POST /api/wishlist**<br>
-Add to wishlist item<br>
-Sample Response:<br>
-```
-[{_id}, ....]
-```
-
-### **DELETE /api/wishlist/:id**<br>
-Delete wishlist item<br>
-Sample Response:<br>
-```
-[{_id}, ....]
+[{_id, name, email}, ....]
 ```
 ---
 
