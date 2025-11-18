@@ -12,7 +12,7 @@ import LeadStatusView from "../components/LeadStatusView";
 const Dashboard = () => {
   return (
     <div className="container">
-      <h1 className="main-title">Anvaya CRM Dashboard</h1>
+      
       <BrowserRouter>
         <Sidebar />
         <Routes>

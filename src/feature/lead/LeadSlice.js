@@ -26,11 +26,22 @@ export const postLead = createAsyncThunk("lead/postLead", async (formData) => {
   }
 });
 
+export const quickFilter = createAsyncThunk("lead/filter", async (filterType) => {
+  try {
+    const response = await axios.get(`https://anvaya-crm-backend-w37z.vercel.app/leads?status=${filterType}`)
+    return response.data
+  } catch (error) {
+    console.error("Server Error", error.message);
+    
+  }
+})
+
 export const LeadSlice = createSlice({
   name: "lead",
   initialState: {
     leads: [],
     createLeads: [],
+    filter:[],
     status: "idle",
     error: null,
   },
@@ -68,6 +79,20 @@ export const LeadSlice = createSlice({
       state.status = "error";
       state.error = action.error?.message || action.payload?.message
     });
+    
+    //quick filter
+    builder.addCase(quickFilter.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(quickFilter.fulfilled, (state, action) => {
+      state.status = "success";
+      state.filter = action.payload;
+    });
+    builder.addCase(quickFilter.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.error?.message || action.payload?.message
+    });
+
   },
 });
 

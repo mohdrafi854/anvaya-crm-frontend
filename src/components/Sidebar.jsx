@@ -3,6 +3,14 @@ import { Link, NavLink } from "react-router-dom";
 const Sidebar = () => {
   return (
     <aside>
+      <div className="logo">
+        <div className="logo-top">
+          Anvaya
+        </div>
+        <div className="logo-btm">
+          CRM
+        </div>
+      </div>
       <ul>
         <li>
           <NavLink
