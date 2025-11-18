@@ -30,7 +30,7 @@ const AddSalesAgent = () => {
 
       setName("");
       setEmail("");
-      setMsg("Sales Agent Added Successfully");
+      setMsg("Sales Agent Added Successfully.");
 
       setTimeout(() => {
         setMsg("");
