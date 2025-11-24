@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { fetchReports } from "../feature/report/ReportSlice";
+import { fetchReports, fetchReportPipeline, fetchReportCloseByAgent } from "../feature/report/ReportSlice";
 import { useEffect } from "react";
 import {
   Chart as ChartJS,
@@ -22,18 +22,6 @@ ChartJS.register(
   Legend
 );
 
-export const data = {
-  labels: ["Leads Closed Last Week", "Total Leads in Pipeline"],
-  datasets: [
-    {
-      data: [1, 2],
-      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
-      borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-      borderWidth: 1,
-    },
-  ],
-};
-
 export const dataStatusDistribution = {
   labels: ["Leads Closed Last Week", "Total Leads in Pipeline"],
   datasets: [
@@ -55,44 +43,96 @@ export const options = {
     },
   },
 };
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const dataTwo = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: [0, 100, 200, 400, 600],
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Dataset 2",
-      data: [0, 200, 400, 600, 800],
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
+
+
 
 const Reports = () => {
   const dispatch = useDispatch();
 
-  const { report, status, error } = useSelector((state) => state.reports);
+  const { report, pipeline, closeByAgent} = useSelector((state) => state.reports);
+
 
   useEffect(() => {
     dispatch(fetchReports());
-  }, []);
+    dispatch(fetchReportPipeline());
+    dispatch(fetchReportCloseByAgent());
+  }, [dispatch]);
+
+  
+
+  const leads = report?.data || [];
+  const leadsClosedLastWeek = leads.length;
+
+  const totalPipeline = pipeline?.filter(item => item.status !== 'Closed')
+  .reduce((sum, item) => sum + item.count, 0);
+
+  
+
+
+
+  const reportClosedByStatus = {
+  labels: ["Leads Closed Last Week", "Total Leads in Pipeline"],
+  datasets: [
+    {
+      data: [leadsClosedLastWeek, totalPipeline],
+      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
+      borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+      borderWidth: 1,
+    },
+  ],
+};
+
+
+const safeCloseByAgent = Array.isArray(closeByAgent) ? closeByAgent : [];
+const labels = safeCloseByAgent.map(item => item.salesAgentName);
+
+console.log("closeByAgent:", closeByAgent);
+
+const barChartData = {
+  labels: labels.length > 0 ? labels : ["No Data"],
+  datasets: [
+    {
+      label: "Leads Closed",
+      data: labels.length > 0 ? safeCloseByAgent.map(item => item.closedCount) : [0],
+      backgroundColor: "rgba(54, 162, 235, 0.5)",
+      borderColor: "rgba(54, 162, 235, 1)",
+      borderWidth: 1
+    }
+  ]
+};
 
   return (
     <div className="right">
-      <h4>Total Leads closed and in Pipeline</h4>
-      <div style={{ width: "300px", height: "300px" }}>
-        <Pie data={data} width={200} height={200} />
-      </div>
-      <h4>Leads Closed by Sales Agent</h4>
-      <Bar options={options} data={dataTwo} />
-      <h4>Lead Status Distribution</h4>
-      <div style={{ width: "300px", height: "300px" }}>
-        <Pie data={dataStatusDistribution} width={200} height={200} />
+      <h1 className="main-title">
+        <img
+          src="https://toppng.com/uploads/preview/menu-icon-png-3-lines-115527444043izrbrvjtv.png"
+          className="iconBar"
+          alt=""
+        />
+        Anvaya CRM Dashboard
+      </h1>
+      <div className="main-sec">
+        <div className="page-title">Reports</div>
+        <div className="lead-block">
+          <h4 className="leads-title">Total Leads closed and in Pipeline</h4>
+          <div style={{ width: "300px", height: "300px", margin:"0 auto" }}>
+            <Pie data={reportClosedByStatus} width={200} height={200} />
+          </div>
+        </div>
+        <div className="lead-block" style={{marginTop:"30px"}}>
+          <h4 className="leads-title">Leads Closed by Sales Agent</h4>
+          <div style={{ width: "900px", height: "500px" }}>
+            <Bar options={options} data={barChartData} />
+          </div>
+        </div>
+
+        <div className="lead-block" style={{marginTop:"30px"}}>
+          <h4 className="leads-title">Lead Status Distribution</h4>
+          <div style={{ width: "300px", height: "300px", margin:"0 auto" }}>
+            <Pie data={dataStatusDistribution} width={200} height={200} />
+          </div>
+        </div>
       </div>
     </div>
   );

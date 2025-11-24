@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { postLead } from "../feature/lead/LeadSlice";
 
 const LeadForm = () => {
@@ -12,9 +12,10 @@ const LeadForm = () => {
   const [timeToClose, setTimeToClose] = useState("");
   const [tags, setTags] = useState("");
   const [inputError, setInputError] = useState("");
+  const [msg, setMsg] = useState("");
 
   const dispatch = useDispatch();
-  //const { leads, error } = useSelector((state) => state.leads);
+  const { leads, error } = useSelector((state) => state.leads);
 
   const onSubmitLead = (e) => {
     e.preventDefault();
@@ -28,6 +29,9 @@ const LeadForm = () => {
       tags: tags,
     };
 
+  
+    
+
     if (name && source && salesAgent && status && priority && timeToClose) {
       dispatch(postLead(leadData));
       setName("");
@@ -37,6 +41,7 @@ const LeadForm = () => {
       setPriority("");
       setTimeToClose("");
       setTags("");
+      setMsg("Added Lead Successfully");
     } else {
       setInputError("Please fill the required data");
     }
@@ -44,6 +49,7 @@ const LeadForm = () => {
 
   function showHideMsg() {
     setInputError("");
+    setMsg("");
   }
 
   useEffect(() => {
@@ -55,9 +61,9 @@ const LeadForm = () => {
 
     const fetchAgents = async () => {
       try {
-        let response = await fetch("http://localhost:5001/agents");
+        let response = await fetch("https://anvaya-crm-backend-w37z.vercel.app/agents");
         let data = await response.json();
-        setAgents(data)
+        setAgents(data);
       } catch (error) {
         console.error(error);
       }
@@ -67,64 +73,75 @@ const LeadForm = () => {
 
   return (
     <div className="right">
-      <p>{inputError}</p>
-      <form onSubmit={onSubmitLead}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Lead Name</label>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
+      <h1 className="main-title">Anvaya CRM Dashboard</h1>
+      <div className="main-sec">
+        <div className="page-title">Add Lead</div>
+        <div className="form-block">
+        {inputError && <strong style={{color:"red"}}>{inputError}</strong>}
+        {msg && <strong style={{color:"green"}}>{msg}</strong>}
+        <form onSubmit={onSubmitLead}>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Lead Name</label>
+            <input type="text" onChange={(e) => setName(e.target.value)} value={name} />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Lead Source</label>
+            <select onChange={(e) => setSource(e.target.value)} value={source}>
+              <option value="Website">Website</option>
+              <option value="Referral">Referral</option>
+              <option value="Cold Call">Cold Call</option>
+            </select>
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Assigned Sales Agent</label>
+            <select onChange={(e) => setSalesAgent(e.target.value)} value={salesAgent}>
+              <option value="">Select Sales Agent</option>
+              {agents.map((agent) => (
+                <option value={agent._id} key={agent._id}>
+                  {agent.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Lead Status</label>
+            <select onChange={(e) => setStatus(e.target.value)} value={status}>
+              <option value="New">New</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Qualified">Qualified</option>
+              <option value="Proposal Sent">Proposal Sent</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Priority </label>
+            <select onChange={(e) => setPriority(e.target.value)} value={priority}>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Time to Close</label>
+            <input
+              type="text"
+              onChange={(e) => setTimeToClose(e.target.value)} value={timeToClose}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Tags </label>
+            <select onChange={(e) => setTags(e.target.value)} value={tags}>
+              <option value="High Value">High Value</option>
+              <option value="Follow-up">Follow-up</option>
+            </select>
+          </div>
+          <button type="submit" className="btn btn-custom">
+            Submit
+          </button>
+        </form>
+
         </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Lead Source</label>
-          <select onChange={(e) => setSource(e.target.value)}>
-            <option value="Website">Website</option>
-            <option value="Referral">Referral</option>
-            <option value="Cold Call">Cold Call</option>
-          </select>
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Assigned Sales Agent</label>
-          <select onChange={(e) => setSalesAgent(e.target.value)}>
-            <option value="">Select Sales Agent</option>
-            {agents.map((agent) => (
-              <option value={agent._id} key={agent._id}>
-                {agent.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Lead Status</label>
-          <select onChange={(e) => setStatus(e.target.value)}>
-            <option value="New">New</option>
-            <option value="Contacted">Contacted</option>
-            <option value="Qualified">Qualified</option>
-            <option value="Proposal Sent">Proposal Sent</option>
-            <option value="Closed">Closed</option>
-          </select>
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Priority </label>
-          <select onChange={(e) => setPriority(e.target.value)}>
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Time to Close</label>
-          <input type="text" onChange={(e) => setTimeToClose(e.target.value)} />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Tags </label>
-          <select onChange={(e) => setTags(e.target.value)}>
-            <option value="High Value">High Value</option>
-            <option value="Follow-up">Follow-up</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-custom">
-          Submit
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

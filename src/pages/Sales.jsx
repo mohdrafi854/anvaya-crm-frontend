@@ -37,7 +37,7 @@ const Sales = () => {
             </tbody>
           </table>
         </div>
-        <Link className="btn btn-custom" to="/addAgent" style={{marginTop:"20px"}}>
+        <Link className="btn btn-custom" to="/agents" style={{marginTop:"20px"}}>
           Add New Agent
         </Link>
       </div>

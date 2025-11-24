@@ -3,6 +3,7 @@ import { fetchLeads } from "../feature/lead/LeadSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const Leads = () => {
+  const [menu, setMenu] = useState(false)
   const dispatch = useDispatch();
   const { leads, error, status } = useSelector((state) => state.leads);
 
@@ -16,9 +17,16 @@ const Leads = () => {
     ? leads.filter((lead) => lead.status === selectedStatus)
     : leads;
 
+    const handleMenuToggle = () => {
+      setMenu(true)
+    }
+
   return (
     <div className="right">
-      <h1 className="main-title">Anvaya CRM Dashboard</h1>
+      <h1 className="main-title">
+        <img src="https://toppng.com/uploads/preview/menu-icon-png-3-lines-115527444043izrbrvjtv.png" className="iconBar" alt="" onClick={handleMenuToggle} />
+        Anvaya CRM Dashboard
+      </h1>
       <div className="main-sec">
         <div className="page-title">Dashboard</div>
         {status === "loading" && <p>Loading...</p>}

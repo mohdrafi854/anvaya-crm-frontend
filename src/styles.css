@@ -77,13 +77,13 @@ ul li {
   padding: 0 25px 0 25px;
 }
 .logo {
-  padding: 0 0 30px 0;
+  padding: 0 0 30px 10px;
 }
 .leadName {
   display: inline-block;
   padding: 8px;
   background-color: #f3f4f6;
-  margin: 0 5px;
+  margin: 0 5px 5px 0;
   border-radius: 9px;
 }
 .btn {
@@ -125,11 +125,12 @@ ul li {
   padding: 30px 0;
 }
 input,
-select {
+select,
+textarea {
   display: block;
   width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  padding: 0.675rem 0.75rem;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
   background-clip: padding-box;
@@ -156,7 +157,7 @@ label {
 .leads-title {
   font-size: 14px;
   font-weight: 600;
-  margin: 0 5px 10px 5px;
+  margin: 0 5px 10px 0;
 }
 .btn-default {
   color: #000;
@@ -234,4 +235,72 @@ table th {
   border-radius: 6px;
   border: 1px solid #e9ebee;
   margin-top: 30px;
+}
+.iconBar {
+  display: none;
+}
+textarea,
+textarea:focus {
+  resize: none;
+  outline: none;
+}
+.comment-block {
+  width: 40%;
+}
+@media only screen and (max-width: 480px) {
+  aside {
+    visibility: hidden;
+    opacity: 0;
+    left: -100%;
+  }
+  .right {
+    margin-left: 0;
+    width: 100%;
+  }
+  .main-title {
+    font-size: 18px;
+  }
+  .iconBar {
+    max-width: 35px;
+    vertical-align: middle;
+    margin-right: 20px;
+    display: inline-block;
+  }
+  .form-block form {
+    width: 100%;
+  }
+  .leadName {
+    margin: 5px;
+    margin-left: 0;
+  }
+  .leads-title {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  aside {
+    width: 220px;
+  }
+  .right {
+    width: calc(100% - 220px);
+    margin-left: calc(220px + 0px);
+    margin-top: 0;
+  }
+  .main-title {
+    font-size: 1.25rem;
+  }
+  .page-title {
+    font-size: 17px;
+    padding: 20px 0;
+  }
+  .form-block form {
+    width: 80%;
+  }
+  .logo {
+    padding: 0 0 10px 10px;
+  }
+  .logo > * {
+    display: inline-block;
+  }
 }
