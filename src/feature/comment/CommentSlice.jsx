@@ -19,25 +19,21 @@ export const CommentSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {
-    // addCommentAsync: (state, action) => {
-    //   state.comment.push(action.payload);
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchComment.pending, (state) => {
       state.status = "loading";
     });
     builder.addCase(fetchComment.fulfilled, (state, action) => {
+      console.log("COMMENTS PAYLOAD =>", action.payload);
       state.status = "success";
       state.comment = action.payload;
     });
     builder.addCase(fetchComment.rejected, (state, action) => {
       state.status = "error";
-      state.error = action.payload.message;
+      state.error = action.payload;
     });
   },
 });
 
-export const addCommentAsync = CommentSlice.actions;
 export default CommentSlice.reducer;

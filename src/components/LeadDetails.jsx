@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const LeadDetails = () => {
-  const [newComment, setNewComment] = useState([]);
   const [inputComment, setInputComment] = useState("");
   const [commentMsg, setCommentMsg] = useState("");
   const dispatch = useDispatch();
@@ -82,7 +81,9 @@ const LeadDetails = () => {
         <div className="lead-block" style={{ marginTop: "30px" }}>
           <h4>Comments Section</h4>
           <ul>
-            {comment?.map((c, index) => (
+
+            {Array.isArray(comment) && 
+            comment?.map((c, index) => (
               <li key={index}>
                 <p>id: {c._id}</p>
                 <span>Author: {c.author}</span> <br />
