@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { fetchReports, fetchReportPipeline, fetchReportCloseByAgent } from "../feature/report/ReportSlice";
 import { useEffect } from "react";
+import MenuBar from "../components/MenuBar";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -47,7 +48,7 @@ export const options = {
 
 
 
-const Reports = () => {
+const Reports = ({handleMenuToggle}) => {
   const dispatch = useDispatch();
 
   const { report, pipeline, closeByAgent} = useSelector((state) => state.reports);
@@ -105,11 +106,7 @@ const barChartData = {
   return (
     <div className="right">
       <h1 className="main-title">
-        <img
-          src="https://toppng.com/uploads/preview/menu-icon-png-3-lines-115527444043izrbrvjtv.png"
-          className="iconBar"
-          alt=""
-        />
+       <MenuBar handleMenuToggle={handleMenuToggle}/>
         Anvaya CRM Dashboard
       </h1>
       <div className="main-sec">
@@ -122,7 +119,7 @@ const barChartData = {
         </div>
         <div className="lead-block" style={{marginTop:"30px"}}>
           <h4 className="leads-title">Leads Closed by Sales Agent</h4>
-          <div style={{ width: "900px", height: "500px" }}>
+          <div className="lcsa" style={{ width: "900px", height: "500px" }}>
             <Bar options={options} data={barChartData} />
           </div>
         </div>

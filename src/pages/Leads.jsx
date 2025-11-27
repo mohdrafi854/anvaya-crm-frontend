@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchLeads } from "../feature/lead/LeadSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Leads = () => {
-  const [menu, setMenu] = useState(false)
+import MenuBar from "../components/MenuBar";
+const Leads = ({handleMenuToggle}) => {
   const dispatch = useDispatch();
   const { leads, error, status } = useSelector((state) => state.leads);
 
@@ -17,14 +17,12 @@ const Leads = () => {
     ? leads.filter((lead) => lead.status === selectedStatus)
     : leads;
 
-    const handleMenuToggle = () => {
-      setMenu(true)
-    }
+
 
   return (
     <div className="right">
       <h1 className="main-title">
-        <img src="https://toppng.com/uploads/preview/menu-icon-png-3-lines-115527444043izrbrvjtv.png" className="iconBar" alt="" onClick={handleMenuToggle} />
+        <MenuBar handleMenuToggle={handleMenuToggle}/>
         Anvaya CRM Dashboard
       </h1>
       <div className="main-sec">

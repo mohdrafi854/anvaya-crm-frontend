@@ -2,8 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAgentList } from "../feature/agent/AgentSlice";
 import { useEffect } from "react";
 import { Link } from "react-router";
+import MenuBar from "../components/MenuBar";
 
-const Sales = () => {
+const Sales = ({handleMenuToggle}) => {
   const dispatch = useDispatch();
   const { agent, status, error } = useSelector((state) => state.agent);
 
@@ -12,7 +13,10 @@ const Sales = () => {
   }, [dispatch]);
   return (
     <div className="right">
-      <h1 className="main-title">Anvaya CRM Dashboard</h1>
+      <h1 className="main-title">
+        <MenuBar handleMenuToggle={handleMenuToggle}/>
+        Anvaya CRM Dashboard
+        </h1>
       <div className="main-sec">
         <div className="page-title">Sales Agents</div>
         {status === "Loading" && <p>Loading...</p>}

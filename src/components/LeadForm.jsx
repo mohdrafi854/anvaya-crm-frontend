@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { postLead } from "../feature/lead/LeadSlice";
+import MenuBar from "./MenuBar";
 
-const LeadForm = () => {
+const LeadForm = ({handleToggleMenu}) => {
   const [name, setName] = useState("");
   const [source, setSource] = useState("");
   const [salesAgent, setSalesAgent] = useState("");
@@ -73,7 +74,10 @@ const LeadForm = () => {
 
   return (
     <div className="right">
-      <h1 className="main-title">Anvaya CRM Dashboard</h1>
+      <h1 className="main-title">
+        <MenuBar handleMenuToggle={handleToggleMenu} />
+        Anvaya CRM Dashboard
+      </h1>
       <div className="main-sec">
         <div className="page-title">Add Lead</div>
         <div className="form-block">

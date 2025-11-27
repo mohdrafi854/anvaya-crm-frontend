@@ -5,8 +5,9 @@ import { fetchComment } from "../feature/comment/CommentSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MenuBar from "./MenuBar";
 
-const LeadDetails = () => {
+const LeadDetails = ({handleMenuToggle}) => {
   const [inputComment, setInputComment] = useState("");
   const [commentMsg, setCommentMsg] = useState("");
   const dispatch = useDispatch();
@@ -55,11 +56,7 @@ const LeadDetails = () => {
   return (
     <div className="right">
       <h1 className="main-title">
-        <img
-          src="https://toppng.com/uploads/preview/menu-icon-png-3-lines-115527444043izrbrvjtv.png"
-          className="iconBar"
-          alt=""
-        />
+        <MenuBar handleMenuToggle={handleMenuToggle} />
         Anvaya CRM Dashboard
       </h1>
       <div className="main-sec">
@@ -74,7 +71,7 @@ const LeadDetails = () => {
           <p>Priority: {detail?.priority}</p>
           <p>Time to Close: {detail?.timeToClose}</p>
 
-          <Link className="btn btn-custom" to={`/`}>
+          <Link className="btn btn-custom" to={`/editLead/${id}`}>
             Edit Lead
           </Link>
         </div>

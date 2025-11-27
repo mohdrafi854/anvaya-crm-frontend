@@ -1,9 +1,10 @@
-const Settings = () => {
+import MenuBar from "../components/MenuBar";
+const Settings = ({handleMenuToggle}) => {
   return (
   <div className="right">
     
     <h1 className="main-title">
-        <img src="https://toppng.com/uploads/preview/menu-icon-png-3-lines-115527444043izrbrvjtv.png" className="iconBar" alt="" />
+    <MenuBar handleMenuToggle={handleMenuToggle}/>    
         Anvaya CRM Dashboard
       </h1>
       <div className="main-sec">

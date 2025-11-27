@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({isOpen}) => {
   return (
-    <aside>
+    <aside className={`${isOpen ? 'open' : ''}`}>
       <div className="logo">
         <div className="logo-top">
           Anvaya

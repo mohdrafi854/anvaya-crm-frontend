@@ -29,6 +29,7 @@ aside {
   border-radius: 0;
   background-color: #fff;
   border-right: 1px solid #e9ebee;
+  transition: all ease-in 0.3s;
 }
 aside ul {
   padding: 0;
@@ -249,9 +250,11 @@ textarea:focus {
 }
 @media only screen and (max-width: 480px) {
   aside {
-    visibility: hidden;
-    opacity: 0;
     left: -100%;
+    width: 200px;
+  }
+  aside.open {
+    left: 0;
   }
   .right {
     margin-left: 0;
@@ -259,6 +262,8 @@ textarea:focus {
   }
   .main-title {
     font-size: 18px;
+    position: relative;
+    z-index: 1;
   }
   .iconBar {
     max-width: 35px;
@@ -276,9 +281,16 @@ textarea:focus {
   .leads-title {
     margin-left: 0;
   }
+  .comment-block {
+    width: 100%;
+  }
+  .lcsa{
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 510px) and (max-width: 768px) {
   aside {
     width: 220px;
   }
@@ -302,5 +314,9 @@ textarea:focus {
   }
   .logo > * {
     display: inline-block;
+  }
+  .lcsa {
+    width: 100% !important;
+    height: 100% !important;
   }
 }
