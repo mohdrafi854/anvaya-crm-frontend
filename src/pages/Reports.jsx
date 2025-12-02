@@ -88,8 +88,6 @@ const Reports = ({handleMenuToggle}) => {
 const safeCloseByAgent = Array.isArray(closeByAgent) ? closeByAgent : [];
 const labels = safeCloseByAgent.map(item => item.salesAgentName);
 
-console.log("closeByAgent:", closeByAgent);
-
 const barChartData = {
   labels: labels.length > 0 ? labels : ["No Data"],
   datasets: [

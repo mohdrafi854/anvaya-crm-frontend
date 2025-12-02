@@ -248,6 +248,36 @@ textarea:focus {
 .comment-block {
   width: 40%;
 }
+.list-unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+.leads-list {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6ebf2;
+  align-items: center;
+}
+.btn-danger {
+  background-color: #fdecec;
+  color: #f04c4c;
+}
+.block-title{
+  font-size: 16px;
+  margin: 0;
+}
+.lead-block-fixed{
+  height: 300px;
+  overflow-y: auto;
+}
+.fa-trash{
+  margin-right: 5px;
+}
+.icon-fs{
+  font-size: 18px;
+  margin-right: 10px;
+}
 @media only screen and (max-width: 480px) {
   aside {
     left: -100%;
@@ -284,7 +314,7 @@ textarea:focus {
   .comment-block {
     width: 100%;
   }
-  .lcsa{
+  .lcsa {
     width: 100% !important;
     height: 100% !important;
   }
@@ -320,11 +350,20 @@ textarea:focus {
     height: 100% !important;
   }
 }
-@media only screen and (min-width: 1024px) and (max-width: 1366px){
+@media only screen and (max-width:1023px){
   .form-block form{
-    width: 70%;
+    width: 90%;
   }
   .lcsa{
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+  .form-block form {
+    width: 70%;
+  }
+  .lcsa {
     width: 100% !important;
     height: 100% !important;
   }

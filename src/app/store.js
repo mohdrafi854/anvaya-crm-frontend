@@ -4,6 +4,7 @@ import { AgentSlice } from "../feature/agent/AgentSlice";
 import { CommentSlice } from "../feature/comment/CommentSlice";
 import { ReportSlice } from "../feature/report/ReportSlice";
 import { StatusViewSlice } from "../feature/statusView/StatusViewSlice";
+import { settingSlice } from "../feature/setting/settingSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     comments: CommentSlice.reducer,
     reports: ReportSlice.reducer,
     leadStatusView: StatusViewSlice.reducer,
+    settings:settingSlice.reducer,
   },
 });
