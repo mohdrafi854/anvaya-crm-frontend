@@ -1,21 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 const AddSalesAgent = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [formError, setFormError] = useState("");
-  const [msg, setMsg] = useState("");
+  const [formError, setFormError] = useState({});
 
   const handleAddAgent = async (e) => {
     e.preventDefault();
+    const newError = {};
 
-    setFormError("");
-    setMsg("");
-
-    if (!name || !email) {
-      setFormError("All fields are required");
-      return;
+    if (!name) {
+      newError["name"] = "Name is required";
     }
+
+    if (!email) {
+      newError["email"] = "Email is required";
+    }
+
+    setFormError(newError);
 
     const formData = {
       name,
@@ -30,21 +33,23 @@ const AddSalesAgent = () => {
 
       setName("");
       setEmail("");
-      setMsg("Sales Agent Added Successfully.");
-
-      setTimeout(() => {
-        setMsg("");
-      }, 3000)
-
+      toast.success("Agent Added Successfully!", {
+        duration: 3000,
+        position: "top-right",
+      });
     } catch (error) {
-      setFormError("Server Error. Try again!");
+      toast.error("Agent not added", {
+        duration: 3000,
+        position: "top-right",
+      });
       console.error("Server Error", error.message);
     }
   };
   return (
     <>
-      {formError && <strong style={{ color: "red" }}>{formError}</strong>}
-      {msg && <strong style={{ color: "green" }}>{msg}</strong>}
+      {/* {formError && <strong style={{ color: "red" }}>{formError}</strong>}
+      {msg && <strong style={{ color: "green" }}>{msg}</strong>} */}
+      <Toaster />
       <form onSubmit={handleAddAgent}>
         <div style={{ marginBottom: "10px" }}>
           <label>Agent Name:</label>
@@ -53,6 +58,18 @@ const AddSalesAgent = () => {
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
+          {formError["name"] && (
+            <p
+              style={{
+                color: "red",
+                fontSize: "12px",
+                fontWeight: "bold",
+                margin: "3px 0 0 0",
+              }}
+            >
+              {formError["name"]}
+            </p>
+          )}
         </div>
         <div style={{ marginBottom: "10px" }}>
           <label>Email Address:</label>
@@ -61,6 +78,18 @@ const AddSalesAgent = () => {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
+          {formError["email"] && (
+            <p
+              style={{
+                color: "red",
+                fontSize: "12px",
+                fontWeight: "bold",
+                margin: "3px 0 0 0",
+              }}
+            >
+              {formError["email"]}
+            </p>
+          )}
         </div>
         <button type="submit" className="btn btn-custom">
           Submit
