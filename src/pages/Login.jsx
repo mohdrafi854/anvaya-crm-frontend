@@ -1,13 +1,17 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validation, setValidation] = useState({});
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
     const newValidation = {};
+    
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
@@ -19,6 +23,19 @@ const Login = () => {
       newValidation["password"] = "Please provide the password";
     }
     setValidation(newValidation);
+
+    const data = {
+        email, password
+    }
+
+    try {
+        await axios.post("https://anvaya-crm-backend-w37z.vercel.app/login", data);
+        navigate("/home")
+    } catch (error) {
+        console.error(error);
+    }
+
+    
   };
 
   return (

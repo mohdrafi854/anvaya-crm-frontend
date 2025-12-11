@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const Signup = () => {
@@ -9,7 +10,7 @@ const Signup = () => {
   const [togglePwd, setTogglePwd] = useState(false);
   const [toggleCrmPwd, setToggleCrmPwd] = useState(false);
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     const newValidation = {};
     if (!name) {
@@ -33,6 +34,19 @@ const Signup = () => {
     }
 
     setValidation(newValidation);
+
+    const data = {
+      name,
+      email,
+      password,
+      confirmPassword,
+    };
+
+    try {
+      await axios.post("https://anvaya-crm-backend-w37z.vercel.app/signup", data);
+    } catch (error) {
+      console.error(error);
+    }
   };
   const handleTogglePwd = () => {
     setTogglePwd(!togglePwd);
@@ -77,7 +91,8 @@ const Signup = () => {
               <input
                 type="text"
                 className="login-control"
-                placeholder="Enter your email" autoComplete="email"
+                placeholder="Enter your email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
