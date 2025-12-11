@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 const Signup = () => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,6 +17,9 @@ const Signup = () => {
     const newValidation = {};
     if (!name) {
       newValidation["name"] = "Please provide the name";
+    }
+    if (!username) {
+      newValidation["username"] = "Please provide the username";
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
@@ -34,16 +39,35 @@ const Signup = () => {
     }
 
     setValidation(newValidation);
+    if (Object.keys(newValidation).length > 0) {
+      return;
+    }
 
     const data = {
       name,
+      username,
       email,
       password,
-      confirmPassword,
     };
 
     try {
-      await axios.post("https://anvaya-crm-backend-w37z.vercel.app/signup", data);
+      await axios.post(
+        "https://anvaya-crm-backend-w37z.vercel.app/signup",
+        data
+      );
+      setName("");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setValidation({});
+      toast.success("User registration has been successfully!", {
+        duration: 4000,
+        position: "top-right",
+        style: {
+          padding: "20px",
+        },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +88,7 @@ const Signup = () => {
             <span className="sm-text">Create Your Account</span>
           </h1>
           <form onSubmit={handleSignup}>
+            <Toaster />
             <div className="input-block">
               <label htmlFor="">Full Name</label>
               <input
@@ -83,6 +108,28 @@ const Signup = () => {
                   }}
                 >
                   {validation["name"]}
+                </p>
+              )}
+            </div>
+            <div className="input-block">
+              <label htmlFor="">Username</label>
+              <input
+                type="text"
+                className="login-control"
+                placeholder="Enter username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              {validation["username"] && (
+                <p
+                  style={{
+                    color: "red",
+                    fontWeight: "bold",
+                    fontSize: "12px",
+                    margin: "3px 0 0 0",
+                  }}
+                >
+                  {validation["username"]}
                 </p>
               )}
             </div>
