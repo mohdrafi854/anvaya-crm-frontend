@@ -7,6 +7,7 @@ import {
   deleteAgent,
 } from "../feature/setting/settingSlice";
 import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 const Settings = ({ handleMenuToggle }) => {
   const dispatch = useDispatch();
   const { setting, agents, status, error } = useSelector(
@@ -21,15 +22,31 @@ const Settings = ({ handleMenuToggle }) => {
   const handleLeadsDelete = (id) => {
     try {
       dispatch(deleteLead(id));
+      toast.success("Lead delete successfully!", {
+        position: "top-right",
+        duration: 4000,
+      });
     } catch (error) {
       console.error("Error Delete item", error);
+      toast.error("Error while delete lead", {
+        position:"top-right",
+        duration:4000,
+      });
     }
   };
   const handleAgentDelete = (id) => {
     try {
       dispatch(deleteAgent(id));
+      toast.success("Agent delete successfully!", {
+        position:"top-right",
+        duration:4000,
+      })
     } catch (error) {
       console.error("Error Delete Agent");
+      toast.error("Error while delete agent", {
+        position:"top-right",
+        duration:4000,
+      })
     }
   };
 
@@ -45,6 +62,7 @@ const Settings = ({ handleMenuToggle }) => {
           {status === "loading" && <p>Loading</p>}
           {error && <p>{error}</p>}
           <h5 className="block-title">All Leads</h5>
+          <Toaster />
           <ul className="list-unstyled">
             {setting.map((item) => (
               <li className="leads-list" key={item._id}>

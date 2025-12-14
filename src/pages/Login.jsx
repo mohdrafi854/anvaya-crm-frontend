@@ -6,18 +6,18 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validation, setValidation] = useState({});
+  const [togglePwd, setTogglePwd] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async(e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const newValidation = {};
-    
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
       newValidation["email"] = "Please provide the email id";
-    }else if(!emailRegex.test(email)){
-        newValidation["email"] = "Please provide the valid email"
+    } else if (!emailRegex.test(email)) {
+      newValidation["email"] = "Please provide the valid email";
     }
     if (!password) {
       newValidation["password"] = "Please provide the password";
@@ -25,18 +25,24 @@ const Login = () => {
     setValidation(newValidation);
 
     const data = {
-        email, password
-    }
+      email,
+      password,
+    };
 
     try {
-        await axios.post("https://anvaya-crm-backend-w37z.vercel.app/login", data);
-        navigate("/home")
+      await axios.post(
+        "https://anvaya-crm-backend-w37z.vercel.app/login",
+        data
+      );
+      navigate("/home");
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-
-    
   };
+
+  const handleTogglePwd = () => {
+    setTogglePwd(!togglePwd)
+  }
 
   return (
     <>
@@ -62,7 +68,7 @@ const Login = () => {
                     color: "red",
                     fontWeight: "bold",
                     margin: "3px 0 0 0",
-                    fontSize:"12px",
+                    fontSize: "12px",
                   }}
                 >
                   {validation["email"]}
@@ -71,25 +77,34 @@ const Login = () => {
             </div>
             <div className="input-block">
               <label htmlFor="">Password</label>
-              <input
-                type="text"
-                className="login-control"
-                value={password}
-                placeholder="Enter Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {validation["password"] && (
-                <p
-                  style={{
-                    color: "red",
-                    fontWeight: "bold",
-                    margin: "3px 0 0 0",
-                    fontSize:"12px",
-                  }}
-                >
-                  {validation["password"]}
-                </p>
-              )}
+              <div className="input-block-wrap">
+                <input
+                  type={togglePwd === false ? "password" : "text"}
+                  className="login-control"
+                  value={password}
+                  placeholder="Enter Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <i
+                  className={`fa-regular ${
+                    togglePwd === false ? "fa-eye" : "fa-eye-slash"
+                  } fa-eye-pos`}
+                  onClick={() => handleTogglePwd()}
+                ></i>
+               
+              </div>
+               {validation["password"] && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontWeight: "bold",
+                      margin: "3px 0 0 0",
+                      fontSize: "12px",
+                    }}
+                  >
+                    {validation["password"]}
+                  </p>
+                )}
             </div>
             <div className="inline-checkbox">
               <label htmlFor="rememberMe">

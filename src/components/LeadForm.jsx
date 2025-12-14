@@ -49,6 +49,8 @@ const LeadForm = ({ handleToggleMenu }) => {
     }
     if (!timeToClose) {
       errors["timeToClose"] = "Please provide the timeToClose";
+    }else if(isNaN(timeToClose)){
+      errors["timeToClose"] = "Please provide the number digit";
     }
     if (!tags) {
       errors["tags"] = "Please provide the tags";

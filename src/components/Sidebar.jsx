@@ -12,7 +12,7 @@ const Sidebar = ({ isOpen }) => {
       <ul>
         <li>
           <NavLink
-            to="/"
+            to="/home"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <i class="fa-solid fa-users icon-fs"></i>
