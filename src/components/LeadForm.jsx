@@ -49,7 +49,8 @@ const LeadForm = ({ handleToggleMenu }) => {
     }
     if (!timeToClose) {
       errors["timeToClose"] = "Please provide the timeToClose";
-    }else if(isNaN(timeToClose)){
+    }
+    if(isNaN(Number(timeToClose))){
       errors["timeToClose"] = "Please provide the number digit";
     }
     if (!tags) {
@@ -57,6 +58,10 @@ const LeadForm = ({ handleToggleMenu }) => {
     }
 
     setValidation(errors);
+
+    if(Object.keys(errors).length > 0){
+      return
+    }
 
     if (name && source && salesAgent && status && priority && timeToClose) {
       dispatch(postLead(leadData));
