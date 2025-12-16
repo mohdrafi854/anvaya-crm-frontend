@@ -7,15 +7,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import MenuBar from "./MenuBar";
 
-const LeadDetails = ({handleMenuToggle}) => {
+const LeadDetails = ({ handleMenuToggle }) => {
   const [inputComment, setInputComment] = useState("");
-  const [commentMsg, setCommentMsg] = useState("");
+  const [inputValidation, setInputValidation] = useState({});
   const dispatch = useDispatch();
   const { leads, status, error } = useSelector((state) => state.leads);
   const { comment } = useSelector((state) => state.comments);
 
   const { id } = useParams();
   const detail = leads?.find((lead) => lead._id === id);
+
+  const comments = comment?.comments;
 
   useEffect(() => {
     dispatch(fetchLeads());
@@ -27,31 +29,31 @@ const LeadDetails = ({handleMenuToggle}) => {
     }
   }, [dispatch, detail]);
 
-  const handleComment = async(e) => {
+  const handleComment = async (e) => {
     e.preventDefault();
+    const error = {};
+    if (!inputComment) {
+      error["commentText"] = "Please provide the comment";
+    }
+    setInputValidation(error);
 
-    if(!inputComment){
-      setCommentMsg("Please provide the message");
+    if (Object.keys(error).length > 0) {
       return;
     }
-    if(!detail?.salesAgent?._id){
-      setCommentMsg("Agent ID is missing");
-      return;
-    }
-    
-      setCommentMsg("")
-    
 
     const data = {
-      author:detail?.salesAgent?._id || "",
-      commentText:inputComment
-    }
-
-    await axios.post(`https://anvaya-crm-backend-w37z.vercel.app/leads/${id}/comments`, data);
-    alert("Comment Added")
+      commentText: inputComment,
+    };
+    const token = localStorage.getItem("token");
+    console.log("TOKEN =>", token);
+    await axios.post(
+      `https://anvaya-crm-backend-w37z.vercel.app/leads/${id}/comments`,
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     setInputComment("");
-    
-  }
+    dispatch(fetchComment(id));
+  };
 
   return (
     <div className="right">
@@ -77,23 +79,42 @@ const LeadDetails = ({handleMenuToggle}) => {
         </div>
         <div className="lead-block" style={{ marginTop: "30px" }}>
           <h4>Comments Section</h4>
-          <ul>
-
-            {Array.isArray(comment) && 
-            comment?.map((c, index) => (
-              <li key={index}>
-                <p>id: {c._id}</p>
-                <span>Author: {c.author}</span> <br />
-                <span>Comment: {c.comment}</span>
-              </li>
-            ))}
+          <ul className="comment-unstyled">
+            {Array.isArray(comments) &&
+              comments?.map((comment, index) => (
+                <li key={index} className="comment-list">
+                  <span>
+                    <strong>Author:</strong> {comment?.author?.name}
+                  </span>
+                  <span>
+                    <strong>Comment:</strong> {comment?.commentText}
+                  </span>
+                </li>
+              ))}
           </ul>
           <form onSubmit={handleComment}>
             <div className="comment-block">
-              <textarea rows={2} cols={20} className="textarea-control" value={inputComment} onChange={(e) => setInputComment(e.target.value)}>
+              <textarea
+                rows={2}
+                cols={20}
+                className="textarea-control"
+                value={inputComment}
+                onChange={(e) => setInputComment(e.target.value)}
+              >
                 &nbsp;
               </textarea>
-              {commentMsg && <p>{commentMsg}</p>}
+              {inputValidation["commentText"] && (
+                <p
+                  style={{
+                    color: "red",
+                    fontWeight: "bold",
+                    margin: "0",
+                    fontSize: "11px",
+                  }}
+                >
+                  {inputValidation["commentText"]}
+                </p>
+              )}
               <button
                 type="submit"
                 className="btn btn-custom"

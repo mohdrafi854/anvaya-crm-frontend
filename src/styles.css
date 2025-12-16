@@ -332,6 +332,17 @@ textarea:focus {
   font-size: 18px;
   cursor: pointer;
 }
+.comment-unstyled{
+  padding-left: 0;
+}
+.comment-unstyled li {
+  padding: 5px 0;
+  margin: 10px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+.comment-unstyled li span{
+  display: block;
+}
 @media only screen and (max-width: 480px) {
   aside {
     left: -100%;

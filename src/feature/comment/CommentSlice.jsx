@@ -25,7 +25,6 @@ export const CommentSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(fetchComment.fulfilled, (state, action) => {
-      console.log("COMMENTS PAYLOAD =>", action.payload);
       state.status = "success";
       state.comment = action.payload;
     });

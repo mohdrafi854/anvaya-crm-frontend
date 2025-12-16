@@ -30,10 +30,11 @@ const Login = () => {
     };
 
     try {
-      await axios.post(
+      const res = await axios.post(
         "https://anvaya-crm-backend-w37z.vercel.app/login",
         data
       );
+      localStorage.setItem("token", res.data.token)
       navigate("/home");
     } catch (error) {
       console.error(error);
@@ -41,8 +42,8 @@ const Login = () => {
   };
 
   const handleTogglePwd = () => {
-    setTogglePwd(!togglePwd)
-  }
+    setTogglePwd(!togglePwd);
+  };
 
   return (
     <>
@@ -59,7 +60,7 @@ const Login = () => {
                 type="text"
                 className="login-control"
                 value={email}
-                placeholder="Enter Email"
+                placeholder="Enter Email" autoComplete="username"
                 onChange={(e) => setEmail(e.target.value)}
               />
               {validation["email"] && (
@@ -83,6 +84,7 @@ const Login = () => {
                   className="login-control"
                   value={password}
                   placeholder="Enter Password"
+                  autoComplete="current-password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <i
@@ -91,20 +93,19 @@ const Login = () => {
                   } fa-eye-pos`}
                   onClick={() => handleTogglePwd()}
                 ></i>
-               
               </div>
-               {validation["password"] && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontWeight: "bold",
-                      margin: "3px 0 0 0",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {validation["password"]}
-                  </p>
-                )}
+              {validation["password"] && (
+                <p
+                  style={{
+                    color: "red",
+                    fontWeight: "bold",
+                    margin: "3px 0 0 0",
+                    fontSize: "12px",
+                  }}
+                >
+                  {validation["password"]}
+                </p>
+              )}
             </div>
             <div className="inline-checkbox">
               <label htmlFor="rememberMe">
