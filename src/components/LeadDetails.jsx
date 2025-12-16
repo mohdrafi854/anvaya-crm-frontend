@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import MenuBar from "./MenuBar";
+import toast, {Toaster} from "react-hot-toast";
 
 const LeadDetails = ({ handleMenuToggle }) => {
   const [inputComment, setInputComment] = useState("");
@@ -53,6 +54,10 @@ const LeadDetails = ({ handleMenuToggle }) => {
     );
     setInputComment("");
     dispatch(fetchComment(id));
+    toast.success("Comment Added Successfully!", {
+      position:"top-right",
+      duration:3000,
+    });
   };
 
   return (
@@ -79,6 +84,7 @@ const LeadDetails = ({ handleMenuToggle }) => {
         </div>
         <div className="lead-block" style={{ marginTop: "30px" }}>
           <h4>Comments Section</h4>
+          <Toaster/>
           <ul className="comment-unstyled">
             {Array.isArray(comments) &&
               comments?.map((comment, index) => (

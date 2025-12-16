@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateLead } from "../feature/lead/LeadSlice";
 import { useParams } from "react-router";
 import MenuBar from "./MenuBar";
+import toast, {Toaster} from "react-hot-toast";
 
 const EditLeadForm = ({handleMenuToggle}) => {
   const [name, setName] = useState("");
@@ -13,11 +14,11 @@ const EditLeadForm = ({handleMenuToggle}) => {
   const [priority, setPriority] = useState("");
   const [timeToClose, setTimeToClose] = useState("");
   const [tags, setTags] = useState("");
-  const [inputError, setInputError] = useState("");
-  const [msg, setMsg] = useState("");
+  const [validation, setValidation] = useState({})
+
 
   const dispatch = useDispatch();
-  const { leads, error } = useSelector((state) => state.leads);
+  const { leads } = useSelector((state) => state.leads);
   const { id } = useParams();
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
 
   const onSubmitLead = (e) => {
     e.preventDefault();
+    const errors = {}
     let updatedLeadData = {
       id: id,
       name: name,
@@ -46,20 +48,39 @@ const EditLeadForm = ({handleMenuToggle}) => {
       tags: tags,
     };
 
+    if(!name){
+      errors["name"] = "Please provide the name"
+    }
+    if(!source){
+      errors["source"] = "Please provide the source"
+    }
+    if(!salesAgent){
+      errors["salesAgent"] = "Please provide the salesAgent"
+    }
+    if(!status){
+      errors["status"] = "Please provide the status"
+    }
+    if(!priority){
+      errors["priority"] = "Please provide the prority"
+    }
+    if(!timeToClose){
+      errors["timeToClose"] = "Please provide the timeToClose"
+    }
+
+    setValidation(errors);
+
     if (name && source && salesAgent && status && priority && timeToClose) {
       dispatch(updateLead(updatedLeadData));
-      setMsg("Lead Updated Successfully");
-      setInputError("");
+      toast.success("Lead Updated Successfully", {
+        position:"top-right",
+        duration:4000,
+      })
     } else {
-      setInputError("Please fill the required data");
-      setMsg("");
+      toast.error("Please fill the required data")
     }
   };
 
-  function showHideMsg() {
-    setInputError("");
-    setMsg("");
-  }
+ 
 
   useEffect(() => {
     const fetchAgents = async () => {
@@ -87,8 +108,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
           Edit Lead
         </div>
         <div className="form-block">
-          {inputError && <strong style={{ color: "red" }}>{inputError}</strong>}
-          {msg && <strong style={{ color: "green" }}>{msg}</strong>}
+          <Toaster/>
           <form onSubmit={onSubmitLead}>
             <div style={{ marginBottom: "15px" }}>
               <label>Lead Name</label>
@@ -97,6 +117,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
+              {validation["name"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["name"]}</p>}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label>Lead Source</label>
@@ -108,6 +129,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                 <option value="Referral">Referral</option>
                 <option value="Cold Call">Cold Call</option>
               </select>
+              {validation["source"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["source"]}</p>}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label>Assigned Sales Agent</label>
@@ -122,6 +144,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                   </option>
                 ))}
               </select>
+              {validation["salesAgent"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["salesAgent"]}</p>}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label>Lead Status</label>
@@ -135,6 +158,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                 <option value="Proposal Sent">Proposal Sent</option>
                 <option value="Closed">Closed</option>
               </select>
+              {validation["status"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["status"]}</p>}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label>Priority </label>
@@ -146,6 +170,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
               </select>
+              {validation["priority"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["priority"]}</p>}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label>Time to Close</label>
@@ -154,6 +179,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                 onChange={(e) => setTimeToClose(e.target.value)}
                 value={timeToClose}
               />
+              {validation["timeToClose"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["timeToClose"]}</p>}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label>Tags </label>
@@ -161,6 +187,7 @@ const EditLeadForm = ({handleMenuToggle}) => {
                 <option value="High Value">High Value</option>
                 <option value="Follow-up">Follow-up</option>
               </select>
+              {validation["tags"] && <p style={{color:"red",fontSize:"12px",fontWeight:"bold",margin:"3px 0 0 0"}}>{validation["tags"]}</p>}
             </div>
             <button type="submit" className="btn btn-custom">
               Submit
